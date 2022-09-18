@@ -280,3 +280,38 @@ class ConformerSampleDockingPoseDataset(BaseWrapperDataset):
 
     def __getitem__(self, index: int):
         return self.__cached_item__(index, self.epoch)
+
+class ConformerSampleDockingIFDDataset(BaseWrapperDataset):
+    def __init__(self, dataset, seed, atoms, coordinates, pocket_atoms, pocket_coordinates):
+        self.dataset = dataset
+        self.seed = seed
+        self.atoms = atoms
+        self.coordinates = coordinates
+        self.pocket_atoms = pocket_atoms
+        self.pocket_coordinates = pocket_coordinates
+        self.set_epoch(None)
+
+    def set_epoch(self, epoch, **unused):
+        super().set_epoch(epoch)
+        self.epoch = epoch
+
+    @lru_cache(maxsize=16)
+    def __cached_item__(self, index: int, epoch: int):
+        atoms = np.array([item[0] for item in self.dataset[index][self.atoms]])
+        assert len(atoms) > 0
+        coordinates = self.dataset[index][self.coordinates]
+        assert len(atoms) == len(coordinates)
+
+        pocket_atoms = np.array([item[0] for item in self.dataset[index][self.pocket_atoms]])
+        assert len(pocket_atoms) > 0
+        pocket_coordinates = self.dataset[index][self.pocket_coordinates]
+        assert len(pocket_atoms) == len(pocket_coordinates)
+
+        return {'atoms': atoms, 
+                'coordinates': coordinates.astype(np.float32), 
+                'pocket_atoms': pocket_atoms, 
+                'pocket_coordinates': pocket_coordinates.astype(np.float32)
+                }
+
+    def __getitem__(self, index: int):
+        return self.__cached_item__(index, self.epoch)

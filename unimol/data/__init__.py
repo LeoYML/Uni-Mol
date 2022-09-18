@@ -32,11 +32,16 @@ from .conformer_sample_dataset import (
     ConformerSampleConfGDataset,
     ConformerSampleConfGV2Dataset,
     ConformerSampleDockingPoseDataset,
+    ConformerSampleDockingIFDDataset,
 )
 from .mask_points_dataset import MaskPointsDataset, MaskPointsPocketDataset
 from .coord_pad_dataset import RightPadDatasetCoord, RightPadDatasetCross2D
 from .from_str_dataset import FromStrLabelDataset
-from .lmdb_dataset import LMDBDataset
+from .lmdb_dataset import (
+    LMDBDataset,
+    FoldLMDBDataset,
+    StackedLMDBDataset,
+)
 from .prepend_and_append_2d_dataset import PrependAndAppend2DDataset
 
 __all__ = []

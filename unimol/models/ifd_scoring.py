@@ -64,8 +64,8 @@ class IFDScoringModel(BaseUnicoreModel):
         self.concat_gbf = GaussianLayer(K, n_edge_type)
         self.concat_gbf_proj = NonLinearHead(K, args.mol.encoder_attention_heads, args.mol.activation_fn)
 
-        self.rmsd_predictor = NonLinearHead(args.mol.encoder_embed_dim*2, 2, 'relu')
-        self.sidechain_predictor = NonLinearHead(args.mol.encoder_embed_dim*2, 2, 'relu')
+        self.rmsd_predictor = NonLinearHead(args.mol.encoder_embed_dim*2, 1, 'relu')
+        self.sidechain_predictor = NonLinearHead(args.mol.encoder_embed_dim*2, 1, 'relu')
 
     @classmethod
     def build_model(cls, args, task):
@@ -228,7 +228,7 @@ class GaussianLayer(nn.Module):
         std = self.stds.weight.float().view(-1).abs() + 1e-5
         return gaussian(x.float(), mean, std).type_as(self.means.weight)
 
-@register_model_architecture("idf_scoring", "idf_scoring")
+@register_model_architecture("ifd_scoring", "ifd_scoring")
 def unimol_idf_scoring_architecture(args):
 
     parser = argparse.ArgumentParser()

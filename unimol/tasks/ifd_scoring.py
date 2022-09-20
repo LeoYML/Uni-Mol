@@ -43,7 +43,7 @@ from unicore.tasks import UnicoreTask, register_task
 logger = logging.getLogger(__name__)
 
 @register_task("ifd_scoring")
-class IFDscoringIFD(DpaieTask):
+class IFDscoringTask(UnicoreTask):
     """Task for training transformer auto-encoder models."""
 
     @staticmethod

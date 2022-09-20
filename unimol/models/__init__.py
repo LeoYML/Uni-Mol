@@ -1,4 +1,7 @@
-from .unimol import UniMolModel
-from .transformer_encoder_with_pair import TransformerEncoderWithPair
-from .conf_gen import UnimolConfGModel
-from .docking_pose import DockingPoseModel
+from pathlib import Path
+import importlib
+
+# automatically import any Python files in the criterions/ directory
+for file in sorted(Path(__file__).parent.glob("*.py")):
+    if not file.name.startswith("_"):
+        importlib.import_module("unimol.models." + file.name[:-3])

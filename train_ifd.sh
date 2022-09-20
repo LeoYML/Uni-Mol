@@ -6,7 +6,7 @@ MASTER_PORT=10086
 data_path='./examples/ifd_scoring'
 finetune_mol_model='./weights/mol_pre_no_h_220816.pt'
 finetune_pocket_model='./weights/pocket_pre_220816.pt'
-exp_name='IFD_run_v2'
+exp_name='IFD_run'
 
 ###
 lr=3e-4
@@ -39,4 +39,5 @@ python -m torch.distributed.launch --nproc_per_node=$n_gpu --master_port=$MASTER
        --find-unused-parameters \
        --required-batch-size-multiple 1 \
        --best-checkpoint-metric valid_loss \
-       --keep-best-checkpoints 1
+       --keep-best-checkpoints 1 \
+       --only-fc

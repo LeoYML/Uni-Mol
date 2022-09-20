@@ -58,7 +58,7 @@ class IFDScoringLoss(UnicoreLoss):
 
     def compute_rmsd_loss(self, rmsd_output, rmsd_target):
         normal_rmsd_target = torch.log(rmsd_target + 1.0).float()
-        mse_loss = F.l1_loss(rmsd_output.float(), normal_rmsd_target, reduce='none')
+        mse_loss = F.mse_loss(rmsd_output.float(), normal_rmsd_target, reduce='none')
         mask = rmsd_target < 2.5
         weight = mask.type_as(rmsd_output) * 3.0 + 1.0
         return (mse_loss * weight).sum()

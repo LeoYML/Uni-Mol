@@ -12,7 +12,7 @@ import glob
 import json
 import lmdb
 
-def write_lmdb(data_path='/mnt/vepfs/users/gaozhifeng/dpaie_new/dpaie/examples/IFD/data_7_4_hashed', save_path='./', prefix='competition_'):
+def write_lmdb(data_path='./', save_path='./', prefix='competition_'):
     train = pd.read_csv(os.path.join(data_path, 'train.csv'))
     test = pd.read_csv(os.path.join(data_path,'test.csv'))
     train_systems = train['System_ID'].unique()
